@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Update Game</h1>
+    </header>
+
+    <section class="update-game-section">
+        <h2>Update Game Information</h2>
+        <form id="updateGameForm">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" name="genre" required>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating:</label>
+                <input type="number" id="rating" name="rating" min="0" max="10">
+            </div>
+            <div class="form-group">
+                <label for="developer">Developer:</label>
+                <input type="text" id="developer" name="developer">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+            <input type="hidden" id="gameId" name="gameId">
+            <button type="submit">Update Game</button>
+        </form>
+    </section>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const queryParams = new URLSearchParams(window.location.search);
+        const gameId = queryParams.get('id');
+
+        document.getElementById('gameId').value = gameId;
+
+        fetch(`/games/${gameId}`)
+            .then(response => response.json())
+            .then(game => {
+                document.getElementById('title').value = game.title || '';
+                document.getElementById('genre').value = game.genre || '';
+                document.getElementById('rating').value = game.rating || '';
+                document.getElementById('developer').value = game.developer || '';
+                document.getElementById('description').value = game.description || '';
+            })
+            .catch(error => console.error('Error fetching game details:', error));
+    });
+
+    document.getElementById('updateGameForm').addEventListener('submit', event => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const gameId = formData.get('gameId');
+        const title = formData.get('title');
+        const genre = formData.get('genre');
+        const rating = formData.get('rating');
+        const developer = formData.get('developer');
+        const description = formData.get('description');
+
+        const updatedGame = {
+            title,
+            genre,
+            rating: parseFloat(rating) || null,
+            developer,
+            description
+        };
+
+        fetch(`/games/${gameId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedGame)
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data);
+                window.location.href = `/game.html?id=${gameId}`;
+            })
+            .catch(error => {
+                console.error('Error updating game:', error);
+                alert('An error occurred while updating the game. Please try again later.');
+            });
+    });
+</script>
+</body>
+</html>

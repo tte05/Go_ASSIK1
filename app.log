@@ -1,0 +1,47 @@
+time="2024-04-14T17:35:21+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T17:35:21+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T17:35:59+05:00" level=info msg="New game added" coverURL= description= developer= genre=22 rating=2 title=11
+time="2024-04-14T17:36:28+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T17:36:28+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T17:42:57+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T17:42:57+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T17:43:48+05:00" level=info msg="New game added" coverURL= description=none developer= genre=gay rating=7 title="alibi "
+time="2024-04-14T17:46:03+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T17:46:03+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T17:46:18+05:00" level=info msg="New game added" coverURL= description= developer= genre=one rating=5 title=none
+time="2024-04-14T17:48:18+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T17:48:18+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T17:50:32+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T17:50:32+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T17:50:56+05:00" level=info msg="New game added" coverURL= description= developer= genre=none rating=5 title=Golang
+time="2024-04-14T17:52:19+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T17:52:19+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T17:52:24+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T17:52:24+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T17:52:24+05:00" level=fatal msg="listen tcp :8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted."
+time="2024-04-14T17:52:29+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T17:52:29+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T17:52:40+05:00" level=info msg="New game added" coverURL= description= developer= genre=123 rating=1 title=123
+time="2024-04-14T17:55:29+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T17:55:29+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T17:55:38+05:00" level=info msg="New game added" coverURL= description= developer= genre=5 rating=5 title=555
+time="2024-04-14T18:51:52+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T18:51:52+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T18:52:05+05:00" level=info msg="New game added" coverURL= description= developer= genre=555 rating=0 title=5555
+time="2024-04-14T18:54:09+05:00" level=info msg="Connected to MongoDB!"
+time="2024-04-14T18:54:09+05:00" level=info msg="Server started at localhost:8080"
+time="2024-04-14T18:54:21+05:00" level=info msg="New game added" coverURL= description= developer= genre=some rating=3 title=some
+2024/04/14 18:58:29 main.go:62: Connected to MongoDB!
+2024/04/14 18:58:29 main.go:81: Server started at localhost:8080
+2024/04/14 19:01:41 main.go:62: Connected to MongoDB!
+2024/04/14 19:01:41 main.go:81: Server started at localhost:8080
+2024/04/14 19:02:12 main.go:62: Connected to MongoDB!
+2024/04/14 19:02:12 main.go:81: Server started at localhost:8080
+2024/04/14 19:09:13 main.go:61: Connected to MongoDB!
+2024/04/14 19:09:13 main.go:80: Server started at localhost:8080
+2024/04/14 19:11:08 main.go:61: Connected to MongoDB!
+2024/04/14 19:11:08 main.go:80: Server started at localhost:8080
+2024/04/14 19:12:06 main.go:61: Connected to MongoDB!
+2024/04/14 19:12:06 main.go:80: Server started at localhost:8080
+2024/04/14 19:16:06 main.go:61: Connected to MongoDB!
+2024/04/14 19:16:06 main.go:80: Server started at localhost:8080

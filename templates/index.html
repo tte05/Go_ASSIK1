@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Library</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Game Library</h1>
+    </header>
+
+    <section class="add-game-section">
+        <h2>Add New Game</h2>
+        <form id="addGameForm">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" name="genre" required>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating:</label>
+                <input type="number" id="rating" name="rating" min="0" max="10">
+            </div>
+            <div class="form-group">
+                <label for="developer">Developer:</label>
+                <input type="text" id="developer" name="developer">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+            <button type="submit">Add Game</button>
+        </form>
+    </section>
+
+    <section class="games-section">
+        <h2>Games</h2>
+        <div>
+            <div>
+                <label for="ratingFilter">Filter by Rating:</label>
+                <select id="ratingFilter">
+                    <option value="">All</option>
+                    <option value="9">9+</option>
+                    <option value="8">8+</option>
+                    <option value="7">7+</option>
+                </select>
+                <button id="applyFiltersButton" onclick="fetchFilteredGamesWithParams">Apply Filters</button>
+
+            </div>
+            <div>
+                <label for="sortSelect">Sort by:</label>
+                <select id="sortSelect">
+                    <option value="titleASC">Title ASC</option>
+                    <option value="genreASC">Genre ASC</option>
+                    <option value="ratingASC">Rating ASC</option>
+                    <option value="titleDESC">Title DESC</option>
+                    <option value="genreDESC">Genre DESC</option>
+                    <option value="ratingDESC">Rating DESC</option>
+                </select>
+                <button onclick="fetchSortedGames()">Sort</button>
+            </div>
+        </div>
+
+        <div id="pagination"></div>
+        <div id="gamesList" class="games-list"></div>
+    </section>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const moreButtons = document.querySelectorAll('.more-button');
+        moreButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const gameId = this.getAttribute('data-game-id');
+                viewGameDetails(gameId);
+            });
+        });
+    });
+
+    function fetchFilteredGames(page, pageSize, sortBy, minRating) {
+        let url = `/games?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}`;
+
+        if (minRating) {
+            url += `&minRating=${minRating}`;
+        }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const gamesList = document.getElementById('gamesList');
+                gamesList.innerHTML = '';
+                data.games.forEach(game => {
+                    const gameElement = document.createElement('div');
+                    gameElement.innerHTML = `
+                    <h3>${game.title}</h3>
+                    <p><strong>Genre:</strong> ${game.genre}</p>
+                    <p><strong>Rating:</strong> ${game.rating || 'N/A'}</p>
+                    <p><strong>Developer:</strong> ${game.developer || 'N/A'}</p>
+                    <button class="more-button" data-game-id="${game._id}">More</button>
+                    <hr>
+                `;
+                    gamesList.appendChild(gameElement);
+                });
+
+                const paginationDiv = document.getElementById('pagination');
+                paginationDiv.innerHTML = '';
+                for (let i = 1; i <= data.totalPages; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i;
+                    button.onclick = () => fetchFilteredGames(i, pageSize, sortBy, minRating);
+                    paginationDiv.appendChild(button);
+                }
+
+                const moreButtons = document.querySelectorAll('.more-button');
+                moreButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const gameId = this.getAttribute('data-game-id');
+                        viewGameDetails(gameId);
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching filtered games:', error));
+    }
+
+    function fetchFilteredGamesWithParams() {
+        const sortBy = document.getElementById('sortSelect').value;
+        const ratingFilter = document.getElementById('ratingFilter').value;
+        fetchFilteredGames(1, 5, sortBy, ratingFilter);
+    }
+
+    document.getElementById('applyFiltersButton').addEventListener('click', fetchFilteredGamesWithParams);
+
+    function fetchGames(page, pageSize, sortBy) {
+        const url = `/games?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const gamesList = document.getElementById('gamesList');
+                gamesList.innerHTML = '';
+                data.games.forEach(game => {
+                    const gameElement = document.createElement('div');
+                    gameElement.innerHTML = `
+                    <h3>${game.title}</h3>
+                    <p><strong>Genre:</strong> ${game.genre}</p>
+                    <p><strong>Rating:</strong> ${game.rating || 'N/A'}</p>
+                    <p><strong>Developer:</strong> ${game.developer || 'N/A'}</p>
+                    <button class="more-button" data-game-id="${game._id}">More</button>
+                    <hr>
+                `;
+                    gamesList.appendChild(gameElement);
+                });
+
+                const paginationDiv = document.getElementById('pagination');
+                paginationDiv.innerHTML = '';
+                for (let i = 1; i <= data.totalPages; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i;
+                    button.onclick = () => fetchGames(i, pageSize, sortBy);
+                    paginationDiv.appendChild(button);
+                }
+
+                const moreButtons = document.querySelectorAll('.more-button');
+                moreButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const gameId = this.getAttribute('data-game-id');
+                        viewGameDetails(gameId);
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching games:', error));
+    }
+
+
+    function viewGameDetails(gameId) {
+        window.location.href = `/game.html?id=${gameId}`;
+    }
+
+    function fetchSortedGames() {
+        const sortBy = document.getElementById('sortSelect').value;
+        fetchGames(1, 5, sortBy);
+    }
+
+    window.addEventListener('load', fetchSortedGames);
+
+    document.getElementById('addGameForm').addEventListener('submit', event => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const title = formData.get('title');
+        const genre = formData.get('genre');
+        const rating = formData.get('rating');
+        const developer = formData.get('developer');
+        const description = formData.get('description');
+
+        const newGame = {
+            title,
+            genre,
+            rating: parseFloat(rating) || null,
+            developer: developer || '',
+            description: description || ''
+        };
+
+        fetch('/games', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newGame)
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                fetchGames(1, 5, 'titleASC');
+                document.getElementById('addGameForm').reset();
+            })
+            .catch(error => {
+                console.error('Error adding game:', error);
+                alert('An error occurred while adding the game. Please try again later.');
+            });
+    });
+</script>
+</body>
+</html>
